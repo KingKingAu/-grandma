@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dv5b327pv0xek"]
+
+[ext_resource type="Script" uid="uid://capd03go4kgdf" path="res://scenes/main/main.gd" id="1_hyk8p"]
+[ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://rducmo7cvr7e" path="res://scenes/level/level.tscn" id="3_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://cuip8djuvm3kb" path="res://scenes/level/platforms.tscn" id="4_l3cfh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(1280, 80)
+
+[node name="main" type="Node2D" unique_id=960753290]
+script = ExtResource("1_hyk8p")
+
+[node name="level" parent="." unique_id=1546633504 instance=ExtResource("3_k2fmo")]
+player_number = 2
+
+[node name="platforms2" parent="level" unique_id=567304206 instance=ExtResource("4_l3cfh")]
+position = Vector2(80, 240)
+
+[node name="platforms3" parent="level" unique_id=539470033 instance=ExtResource("4_l3cfh")]
+position = Vector2(80, 80)
+
+[node name="platforms4" parent="level" unique_id=1991220518 instance=ExtResource("4_l3cfh")]
+position = Vector2(880, 160)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=764908899]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Camera2D" unique_id=492765870]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/StaticBody2D" unique_id=916682021]
+position = Vector2(0, 320)
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Camera2D/StaticBody2D" unique_id=1686074711]
+position = Vector2(0, -40)
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="player" parent="." unique_id=1740188011 instance=ExtResource("2_iuonh")]
+position = Vector2(-400, -200)
+JUMP_VELOCITY = -600.0
+
+[node name="player2" parent="." unique_id=1965068261 instance=ExtResource("2_iuonh")]
+position = Vector2(-400, 200)
+player_number = 2
+JUMP_VELOCITY = -600.0
