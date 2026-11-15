@@ -2,44 +2,37 @@
 
 [ext_resource type="Script" uid="uid://capd03go4kgdf" path="res://scenes/main/main.gd" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_iuonh"]
-[ext_resource type="PackedScene" uid="uid://rducmo7cvr7e" path="res://scenes/level/level.tscn" id="3_k2fmo"]
-[ext_resource type="PackedScene" uid="uid://cuip8djuvm3kb" path="res://scenes/level/platforms.tscn" id="4_l3cfh"]
+[ext_resource type="Script" uid="uid://dos2mdl8t6ivp" path="res://scenes/main/level_prototype.gd" id="4_l3cfh"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
-size = Vector2(1280, 80)
-
-[node name="main" type="Node2D" unique_id=960753290]
+[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("player1", "player2", "level1", "level2")]
 script = ExtResource("1_hyk8p")
-
-[node name="level" parent="." unique_id=1546633504 instance=ExtResource("3_k2fmo")]
-player_number = 2
-
-[node name="platforms2" parent="level" unique_id=567304206 instance=ExtResource("4_l3cfh")]
-position = Vector2(80, 240)
-
-[node name="platforms3" parent="level" unique_id=539470033 instance=ExtResource("4_l3cfh")]
-position = Vector2(80, 80)
-
-[node name="platforms4" parent="level" unique_id=1991220518 instance=ExtResource("4_l3cfh")]
-position = Vector2(880, 160)
+player1 = NodePath("player")
+player2 = NodePath("player2")
+level1 = NodePath("level prototype")
+level2 = NodePath("level prototype2")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=764908899]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Camera2D" unique_id=492765870]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/StaticBody2D" unique_id=916682021]
-position = Vector2(0, 320)
-shape = SubResource("RectangleShape2D_g4v7s")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Camera2D/StaticBody2D" unique_id=1686074711]
-position = Vector2(0, -40)
-shape = SubResource("RectangleShape2D_g4v7s")
-
 [node name="player" parent="." unique_id=1740188011 instance=ExtResource("2_iuonh")]
 position = Vector2(-400, -200)
+scale = Vector2(0.5, 0.5)
 JUMP_VELOCITY = -600.0
 
 [node name="player2" parent="." unique_id=1965068261 instance=ExtResource("2_iuonh")]
 position = Vector2(-400, 200)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 2
 player_number = 2
 JUMP_VELOCITY = -600.0
+
+[node name="level prototype" type="Node2D" parent="." unique_id=1705298986 node_paths=PackedStringArray("main")]
+position = Vector2(0, -200)
+script = ExtResource("4_l3cfh")
+main = NodePath("..")
+
+[node name="level prototype2" type="Node2D" parent="." unique_id=1485788718 node_paths=PackedStringArray("main")]
+position = Vector2(0, 180)
+script = ExtResource("4_l3cfh")
+main = NodePath("..")
+player_number = 2

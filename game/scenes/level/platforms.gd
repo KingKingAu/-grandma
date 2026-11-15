@@ -8,6 +8,7 @@ var width = 80
 func _ready() -> void:
 	
 	width = randi_range(80, 1280)
+	width = snappedi(width, 80)
 	$ColorRect.size.x = width
 	$ColorRect.position.x = -width / 2
 	$CollisionShape2D.shape.size.x = width
