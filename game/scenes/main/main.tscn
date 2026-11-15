@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://capd03go4kgdf" path="res://scenes/main/main.gd" id="1_hyk8p"]
 [ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_iuonh"]
+[ext_resource type="Script" uid="uid://dqoyf4y4ksly6" path="res://scenes/main/ui.gd" id="4_6q06x"]
 [ext_resource type="Script" uid="uid://dos2mdl8t6ivp" path="res://scenes/main/level_prototype.gd" id="4_l3cfh"]
 
 [sub_resource type="Gradient" id="Gradient_k2fmo"]
@@ -22,37 +23,81 @@ level2 = NodePath("level prototype2")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=764908899]
 
-[node name="player" parent="." unique_id=1740188011 instance=ExtResource("2_iuonh")]
+[node name="player" parent="." unique_id=1740188011 node_paths=PackedStringArray("main") instance=ExtResource("2_iuonh")]
 position = Vector2(-400, -115)
 scale = Vector2(0.5, 0.5)
+main = NodePath("..")
 JUMP_VELOCITY = -600.0
 
-[node name="player2" parent="." unique_id=1965068261 instance=ExtResource("2_iuonh")]
+[node name="player2" parent="." unique_id=1965068261 node_paths=PackedStringArray("main") instance=ExtResource("2_iuonh")]
 position = Vector2(-400, 265)
 scale = Vector2(0.5, 0.5)
 collision_layer = 2
 collision_mask = 2
+main = NodePath("..")
 player_number = 2
 JUMP_VELOCITY = -600.0
 
-[node name="level prototype" type="Node2D" parent="." unique_id=1705298986 node_paths=PackedStringArray("main")]
+[node name="level prototype" type="Node2D" parent="." unique_id=1705298986 node_paths=PackedStringArray("main", "rewind_metre")]
 position = Vector2(0, -200)
 script = ExtResource("4_l3cfh")
 main = NodePath("..")
+rewind_metre = NodePath("../ui/bg/VBoxContainer/1/HBoxContainer/rewind_meter")
 
-[node name="level prototype2" type="Node2D" parent="." unique_id=1485788718 node_paths=PackedStringArray("main")]
+[node name="Label" type="Label" parent="level prototype" unique_id=665528264]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -481.0
+offset_top = -90.0
+offset_right = -319.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+text = "WASD to move
+SHIFT (left) to rewind"
+horizontal_alignment = 1
+
+[node name="level prototype2" type="Node2D" parent="." unique_id=1485788718 node_paths=PackedStringArray("main", "rewind_metre")]
 position = Vector2(0, 180)
 script = ExtResource("4_l3cfh")
 main = NodePath("..")
 player_number = 2
+rewind_metre = NodePath("../ui/bg/VBoxContainer/2/HBoxContainer/rewind_meter")
 
-[node name="ui" type="Control" parent="." unique_id=1831061031]
+[node name="Label" type="Label" parent="level prototype2" unique_id=1401860222]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -486.5
+offset_top = -110.0
+offset_right = -313.5
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+text = "Arrow keys to move
+SHIFT (right) to rewind"
+horizontal_alignment = 1
+
+[node name="ui" type="Control" parent="." unique_id=1831061031 node_paths=PackedStringArray("main", "score1", "level1", "score2", "level2")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("4_6q06x")
+main = NodePath("..")
+score1 = NodePath("bg/VBoxContainer/1/HBoxContainer/score")
+level1 = NodePath("../level prototype")
+score2 = NodePath("bg/VBoxContainer/2/HBoxContainer/score")
+level2 = NodePath("../level prototype2")
 
-[node name="ColorRect" type="ColorRect" parent="ui" unique_id=692022522]
+[node name="bg" type="ColorRect" parent="ui" unique_id=692022522]
 layout_mode = 0
 offset_left = 320.0
 offset_top = -360.0
@@ -60,6 +105,69 @@ offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0, 0, 0, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="ui" unique_id=1321713360]
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/bg" unique_id=1000894337]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="1" type="MarginContainer" parent="ui/bg/VBoxContainer" unique_id=499829906]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/bg/VBoxContainer/1" unique_id=1837298652]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="score" type="Label" parent="ui/bg/VBoxContainer/1/HBoxContainer" unique_id=624359046]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+text = "Player 1"
+
+[node name="rewind_meter" type="ProgressBar" parent="ui/bg/VBoxContainer/1/HBoxContainer" unique_id=332415855]
+custom_minimum_size = Vector2(80, 100)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+value = 1.0
+fill_mode = 3
+
+[node name="2" type="MarginContainer" parent="ui/bg/VBoxContainer" unique_id=1388092007]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/bg/VBoxContainer/2" unique_id=1041528167]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="score" type="Label" parent="ui/bg/VBoxContainer/2/HBoxContainer" unique_id=2076250227]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+text = "Player 2"
+
+[node name="rewind_meter" type="ProgressBar" parent="ui/bg/VBoxContainer/2/HBoxContainer" unique_id=141413045]
+custom_minimum_size = Vector2(80, 100)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+value = 1.0
+fill_mode = 3
+
+[node name="gradient" type="Sprite2D" parent="ui" unique_id=1321713360]
 position = Vector2(300, 0)
 texture = SubResource("GradientTexture2D_g4v7s")

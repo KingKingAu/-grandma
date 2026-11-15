@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var main: Node2D
+
 @export var player_number := 1 ## PLAYER 1 OR 2
 
 @export var JUMP_VELOCITY = -400.0
@@ -28,10 +30,12 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_just_released(str(player_number) + "_up") and velocity.y < 0:
 		velocity.y /= 2.0
 	
-	if not is_on_floor() and !Input.is_action_pressed(str(player_number) + "_reverse"):
-		velocity += get_gravity() * delta
+	if not is_on_floor():
+			velocity += get_gravity() * delta
 	
 	velocity.x = (target_x - position.x) * 10.0
 	
 	was_on_floor = is_on_floor()
-	move_and_slide()
+	
+	if (player_number == 1 and main.is_recording1) or (player_number == 2 and main.is_recording2):
+		move_and_slide()

@@ -3,6 +3,7 @@ extends Node2D
 @export var main: Node2D
 @export var player_number := 1 ## PLAYER 1 OR 2
 var speed_modifier: = 1.0
+@export var rewind_metre: ProgressBar
 
 @export var start_speed := 10.0
 @export var speed := 10.0
@@ -28,13 +29,6 @@ var current_pattern := [0, 0, 0, 1]
 var stretch_remains := 18
 var is_transition_gap := false
 
-# Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#for i in range(18):
-		#spawn_tile(next_x, lanes[-1])
-		#next_x += tile_size
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	while next_x + position.x < HALF_WIDTH + tile_size:
@@ -54,7 +48,6 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
 	if player_number == 1:
 		if !main.is_recording1:
 			return
@@ -66,7 +59,7 @@ func _physics_process(delta: float) -> void:
 	
 	direction = Input.get_axis(str(player_number) + "_left", str(player_number) + "_right")
 	
-	if Input.is_action_pressed(str(player_number) + "_reverse"):
+	if Input.is_action_pressed(str(player_number) + "_reverse") and rewind_metre.value > 0.0:
 		speed_modifier = clamp(speed_modifier - delta, 1.0/3.0, 1.0)
 		speed = start_speed
 	else:
