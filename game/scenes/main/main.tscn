@@ -4,6 +4,15 @@
 [ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_iuonh"]
 [ext_resource type="Script" uid="uid://dos2mdl8t6ivp" path="res://scenes/main/level_prototype.gd" id="4_l3cfh"]
 
+[sub_resource type="Gradient" id="Gradient_k2fmo"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g4v7s"]
+gradient = SubResource("Gradient_k2fmo")
+height = 720
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
 [node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("player1", "player2", "level1", "level2")]
 script = ExtResource("1_hyk8p")
 player1 = NodePath("player")
@@ -14,12 +23,12 @@ level2 = NodePath("level prototype2")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=764908899]
 
 [node name="player" parent="." unique_id=1740188011 instance=ExtResource("2_iuonh")]
-position = Vector2(-400, -200)
+position = Vector2(-400, -115)
 scale = Vector2(0.5, 0.5)
 JUMP_VELOCITY = -600.0
 
 [node name="player2" parent="." unique_id=1965068261 instance=ExtResource("2_iuonh")]
-position = Vector2(-400, 200)
+position = Vector2(-400, 265)
 scale = Vector2(0.5, 0.5)
 collision_layer = 2
 collision_mask = 2
@@ -36,3 +45,21 @@ position = Vector2(0, 180)
 script = ExtResource("4_l3cfh")
 main = NodePath("..")
 player_number = 2
+
+[node name="ui" type="Control" parent="." unique_id=1831061031]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="ui" unique_id=692022522]
+layout_mode = 0
+offset_left = 320.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="ui" unique_id=1321713360]
+position = Vector2(300, 0)
+texture = SubResource("GradientTexture2D_g4v7s")
