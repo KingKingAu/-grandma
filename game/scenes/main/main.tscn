@@ -4,6 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_iuonh"]
 [ext_resource type="Script" uid="uid://dqoyf4y4ksly6" path="res://scenes/main/ui.gd" id="4_6q06x"]
 [ext_resource type="Script" uid="uid://dos2mdl8t6ivp" path="res://scenes/main/level_prototype.gd" id="4_l3cfh"]
+[ext_resource type="FontFile" uid="uid://cnbwr5cqxs8gr" path="res://assets/Abaddon_Fonts_v1.2/Abaddon Bold.ttf" id="4_ow5a4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_g4v7s"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_l3cfh"]
+font = ExtResource("4_ow5a4")
+font_size = 32
 
 [sub_resource type="Gradient" id="Gradient_k2fmo"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -14,12 +21,20 @@ height = 720
 fill_from = Vector2(1, 0)
 fill_to = Vector2(0, 0)
 
-[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("player1", "player2", "level1", "level2")]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l3cfh"]
+gradient = SubResource("Gradient_k2fmo")
+width = 32
+height = 1280
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("player1", "player2", "level1", "level2", "timer")]
 script = ExtResource("1_hyk8p")
 player1 = NodePath("player")
 player2 = NodePath("player2")
 level1 = NodePath("level prototype")
 level2 = NodePath("level prototype2")
+timer = NodePath("ui/bg/VBoxContainer/MarginContainer/HBoxContainer/Timer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=764908899]
 
@@ -38,8 +53,25 @@ main = NodePath("..")
 player_number = 2
 JUMP_VELOCITY = -600.0
 
+[node name="death1" type="Area2D" parent="." unique_id=1726322474]
+position = Vector2(0, 180)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="death1" unique_id=128378664]
+position = Vector2(0, 190)
+shape = SubResource("WorldBoundaryShape2D_g4v7s")
+
+[node name="death2" type="Area2D" parent="." unique_id=719452690]
+position = Vector2(0, 180)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="death2" unique_id=1492621718]
+position = Vector2(0, 550)
+shape = SubResource("WorldBoundaryShape2D_g4v7s")
+
 [node name="level prototype" type="Node2D" parent="." unique_id=1705298986 node_paths=PackedStringArray("main", "rewind_metre")]
-position = Vector2(0, -200)
+position = Vector2(0, -180)
 script = ExtResource("4_l3cfh")
 main = NodePath("..")
 rewind_metre = NodePath("../ui/bg/VBoxContainer/1/HBoxContainer/rewind_meter")
@@ -57,6 +89,7 @@ grow_vertical = 2
 size_flags_horizontal = 0
 text = "WASD to move
 SHIFT (left) to rewind"
+label_settings = SubResource("LabelSettings_l3cfh")
 horizontal_alignment = 1
 
 [node name="level prototype2" type="Node2D" parent="." unique_id=1485788718 node_paths=PackedStringArray("main", "rewind_metre")]
@@ -71,17 +104,18 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -486.5
-offset_top = -110.0
+offset_top = -90.0
 offset_right = -313.5
-offset_bottom = -61.0
+offset_bottom = -41.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 text = "Arrow keys to move
 SHIFT (right) to rewind"
+label_settings = SubResource("LabelSettings_l3cfh")
 horizontal_alignment = 1
 
-[node name="ui" type="Control" parent="." unique_id=1831061031 node_paths=PackedStringArray("main", "score1", "level1", "score2", "level2")]
+[node name="ui" type="Control" parent="." unique_id=1831061031 node_paths=PackedStringArray("main", "timer", "score1", "level1", "score2", "level2")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,10 +126,25 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("4_6q06x")
 main = NodePath("..")
+timer = NodePath("bg/VBoxContainer/MarginContainer/HBoxContainer/timer_label")
 score1 = NodePath("bg/VBoxContainer/1/HBoxContainer/score")
 level1 = NodePath("../level prototype")
 score2 = NodePath("bg/VBoxContainer/2/HBoxContainer/score")
 level2 = NodePath("../level prototype2")
+
+[node name="gradient" type="Sprite2D" parent="ui" unique_id=1321713360]
+position = Vector2(300, 0)
+texture = SubResource("GradientTexture2D_g4v7s")
+
+[node name="gradient2" type="Sprite2D" parent="ui" unique_id=1546262437]
+position = Vector2(0, -16)
+rotation = 1.5707964
+texture = SubResource("GradientTexture2D_l3cfh")
+
+[node name="gradient3" type="Sprite2D" parent="ui" unique_id=746186176]
+position = Vector2(0, 344)
+rotation = 1.5707964
+texture = SubResource("GradientTexture2D_l3cfh")
 
 [node name="bg" type="ColorRect" parent="ui" unique_id=692022522]
 layout_mode = 0
@@ -132,6 +181,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 0
 text = "Player 1"
+label_settings = SubResource("LabelSettings_l3cfh")
 
 [node name="rewind_meter" type="ProgressBar" parent="ui/bg/VBoxContainer/1/HBoxContainer" unique_id=332415855]
 custom_minimum_size = Vector2(80, 100)
@@ -140,6 +190,38 @@ size_flags_vertical = 1
 max_value = 1.0
 value = 1.0
 fill_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ui/bg/VBoxContainer" unique_id=1973515108]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/bg/VBoxContainer/MarginContainer" unique_id=1224401662]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="timer_label" type="Label" parent="ui/bg/VBoxContainer/MarginContainer/HBoxContainer" unique_id=918040556]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_ow5a4")
+theme_override_font_sizes/font_size = 64
+text = "30"
+horizontal_alignment = 1
+
+[node name="filler" type="ProgressBar" parent="ui/bg/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1620766607]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="ui/bg/VBoxContainer/MarginContainer/HBoxContainer" unique_id=854701499]
+one_shot = true
 
 [node name="2" type="MarginContainer" parent="ui/bg/VBoxContainer" unique_id=1388092007]
 layout_mode = 2
@@ -159,6 +241,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 0
 text = "Player 2"
+label_settings = SubResource("LabelSettings_l3cfh")
 
 [node name="rewind_meter" type="ProgressBar" parent="ui/bg/VBoxContainer/2/HBoxContainer" unique_id=141413045]
 custom_minimum_size = Vector2(80, 100)
@@ -168,6 +251,6 @@ max_value = 1.0
 value = 1.0
 fill_mode = 3
 
-[node name="gradient" type="Sprite2D" parent="ui" unique_id=1321713360]
-position = Vector2(300, 0)
-texture = SubResource("GradientTexture2D_g4v7s")
+[connection signal="body_entered" from="death1" to="." method="_on_death_1_body_entered"]
+[connection signal="body_entered" from="death2" to="." method="_on_death_2_body_entered"]
+[connection signal="timeout" from="ui/bg/VBoxContainer/MarginContainer/HBoxContainer/Timer" to="." method="_on_timer_timeout"]

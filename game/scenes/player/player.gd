@@ -12,10 +12,21 @@ extends CharacterBody2D
 
 @export var target_x = -400
 
-var speed_modifier: = 1.0
-var was_on_floor: bool = false
+var speed_modifier := 1.0
+var was_on_floor := false
+
+func _ready() -> void:
+	speed_modifier = 1.0
+	was_on_floor = false
 
 func _physics_process(delta: float) -> void:
+	
+	if !main.game_on:
+		return
+	
+	if !(player_number == 1 and main.is_recording1) and !(player_number == 2 and main.is_recording2):
+		return
+	
 	if was_on_floor and !is_on_floor() and velocity.y >= 0.0:
 		coyote_timer.start(coyote_time)
 	
@@ -37,5 +48,4 @@ func _physics_process(delta: float) -> void:
 	
 	was_on_floor = is_on_floor()
 	
-	if (player_number == 1 and main.is_recording1) or (player_number == 2 and main.is_recording2):
-		move_and_slide()
+	move_and_slide()

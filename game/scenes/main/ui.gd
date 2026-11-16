@@ -1,6 +1,7 @@
 extends Control
 
 @export var main: Node2D
+@export var timer: Label
 
 @export_group("Player 1")
 @export var score1: Label
@@ -17,6 +18,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	main.score1 = roundi(-level1.position.x / 100)
+	main.score2 = roundi(-level2.position.x / 100)
+	score1.text = str(main.score1)
+	score2.text = str(main.score2)
 	
-	score1.text = str(roundi(-level1.position.x / 100))
-	score2.text = str(roundi(-level2.position.x / 100))
+	timer.text = str(int(main.timer.time_left))
+	

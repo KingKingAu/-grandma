@@ -8,46 +8,59 @@ var speed_modifier: = 1.0
 @export var start_speed := 10.0
 @export var speed := 10.0
 @export var tile_size := 80.0
+
 const HALF_WIDTH = 1280 / 2.0
 
-var lanes = [-100, -20, 60, 140]
+var lanes = [-20, 60, 140]
 
 var patterns = [
-	# top, middle, middle, bottom rows
-	[0, 0, 1, 0],
-	[0, 1, 0, 1],
-	[0, 0, 1, 1],
-	[0, 1, 1, 1],
-	[0, 0, 0, 1],
-	[0, 1, 0, 0],
-	[0, 0, 0, 1],
-	[0, 0, 0, 0]
+	# top, middle, bottom rows
+	[0, 1, 0],
+	[1, 0, 1],
+	[0, 1, 1],
+	[1, 1, 1],
+	[0, 0, 1],
+	[1, 0, 0],
+	[0, 0, 1],
+	[0, 0, 0]
 ]
 
 var next_x = -HALF_WIDTH
-var current_pattern := [0, 0, 0, 1]
+var current_pattern := [0, 0, 1]
 var stretch_remains := 18
 var is_transition_gap := false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _ready() -> void:
+	current_pattern = [0, 0, 1]
+	stretch_remains = 18
+	is_transition_gap = false
+
 func _process(delta: float) -> void:
+	
+	if !main.game_on:
+		return
+	
 	while next_x + position.x < HALF_WIDTH + tile_size:
 		if stretch_remains <= 0:
 			next_stretch()
 		
-		for row in range(4):
+		for row in range(3):
 			if current_pattern[row] == 1:
 				spawn_tile(next_x, lanes[row])
 				
 		next_x += tile_size
 		stretch_remains -= 1
 	
-	for block in get_children():
-		if block.global_position.x < -HALF_WIDTH * 10 - tile_size:
-			block.queue_free()
+	for tile in get_children():
+		if tile.global_position.x < -HALF_WIDTH * 10 - tile_size:
+			tile.queue_free()
 
 
 func _physics_process(delta: float) -> void:
+	
+	if !main.game_on:
+		return
+	
 	if player_number == 1:
 		if !main.is_recording1:
 			return
@@ -95,7 +108,7 @@ func spawn_tile(x, y):
 
 func next_stretch() -> void:
 	if !is_transition_gap:
-		current_pattern = [[0, 0, 0, 0], [0, 0, 0, 1]].pick_random()
+		current_pattern = [[0, 0, 0], [0, 0, 1]].pick_random()
 		is_transition_gap = true
 		stretch_remains = randi_range(2, 4)
 		return
@@ -103,7 +116,7 @@ func next_stretch() -> void:
 	is_transition_gap = false
 	var next_pat: Array = patterns.pick_random()
 	
-	while next_pat == [0, 0, 0, 0]:
+	while next_pat == [0, 0, 0]:
 		next_pat = patterns.pick_random()
 	
 	stretch_remains = randi_range(3, 6)
