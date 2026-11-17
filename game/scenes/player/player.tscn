@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dow7r7mgjmclf" path="res://scenes/player/player.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://d3vcn15vwvm2d" path="res://assets/art/player.png" id="3_gmlin"]
 [ext_resource type="Shader" uid="uid://cjgob2br4vww4" path="res://scenes/player/colour_change.gdshader" id="4_lvxji"]
+[ext_resource type="Texture2D" uid="uid://7w1q1c8s14fw" path="res://assets/art/arrow.png" id="4_p47bc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4v7s"]
 radius = 31.016125
@@ -61,11 +62,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="player" type="CharacterBody2D" unique_id=1740188011 node_paths=PackedStringArray("coyote_timer", "jump_buffer_timer", "anim")]
+[node name="player" type="CharacterBody2D" unique_id=1740188011 node_paths=PackedStringArray("coyote_timer", "jump_buffer_timer", "anim", "arrow")]
 script = ExtResource("1_dovo2")
 coyote_timer = NodePath("coyote")
 jump_buffer_timer = NodePath("jump_buffer")
 anim = NodePath("AnimatedSprite2D")
+arrow = NodePath("arrow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1178410566]
 shape = SubResource("CircleShape2D_g4v7s")
@@ -81,3 +83,10 @@ material = SubResource("ShaderMaterial_ow5a4")
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"run"
+
+[node name="arrow" type="Sprite2D" parent="." unique_id=513113474]
+visible = false
+material = SubResource("ShaderMaterial_ow5a4")
+position = Vector2(0, 80)
+scale = Vector2(8, 8)
+texture = ExtResource("4_p47bc")

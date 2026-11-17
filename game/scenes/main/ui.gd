@@ -25,8 +25,10 @@ func _process(delta: float) -> void:
 	if !main.game_on:
 		return
 	
-	main.score1 = roundi(-level1.position.x / 100)
-	main.score2 = roundi(-level2.position.x / 100)
+	if !level1.disabled:
+		main.score1 = roundi(-level1.position.x / 100)
+	if !level2.disabled:
+		main.score2 = roundi(-level2.position.x / 100)
 	score1.text = str(main.score1)
 	score2.text = str(main.score2)
 	

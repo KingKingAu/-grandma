@@ -12,6 +12,8 @@ var speed_modifier: = 1.0
 var current_speed: float
 @export var tile_size := 80.0
 
+@export var parallax_layers: Array[Parallax2D] = []
+
 const HALF_WIDTH = 1280 / 2.0
 
 var lanes = [-20, 60, 140]
@@ -33,6 +35,8 @@ var current_pattern := [0, 0, 1]
 var stretch_remains := 18
 var is_transition_gap := false
 
+var disabled := false
+
 func _ready() -> void:
 	current_pattern = [0, 0, 1]
 	stretch_remains = 18
@@ -41,10 +45,11 @@ func _ready() -> void:
 		player = players[0]
 	else:
 		player = players[1]
+	disabled = false
 
 func _process(delta: float) -> void:
 	
-	if !main.game_on:
+	if !main.game_on or disabled:
 		return
 	
 	while next_x + position.x < HALF_WIDTH + tile_size:
@@ -69,11 +74,16 @@ func _process(delta: float) -> void:
 		if tile is StaticBody2D:
 			if tile.global_position.x < -HALF_WIDTH * 5 - tile_size:
 				tile.queue_free()
+	
+	for layer in parallax_layers:
+		if layer:
+			layer.scroll_offset.x = -global_position.x * layer.scroll_scale.x
+
 
 
 func _physics_process(delta: float) -> void:
 	
-	if !main.game_on:
+	if !main.game_on or disabled:
 		return
 	
 	if player_number == 1:
