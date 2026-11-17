@@ -12,6 +12,8 @@ var winning_player: CharacterBody2D
 
 @export var game_over_menu: PackedScene
 
+@export var countdown: Label
+
 var player_pos1 := []
 var player_pos2 := []
 
@@ -21,15 +23,27 @@ var level_pos2 := []
 var is_recording1 := true ## rewinding will be when it is false
 var is_recording2 := true ## rewinding will be when it is false
 
-var game_on := true
+var game_on := false
 
 var score1 := 0
 var score2 := 0
 
 func _ready() -> void:
 	game_on = true
-	
+	winning_player = player1
+	await get_tree().create_timer(.01).timeout
+	game_on = false
 	await get_tree().create_timer(1).timeout
+	countdown.text = "2"
+	await get_tree().create_timer(1).timeout
+	countdown.text = "1"
+	await get_tree().create_timer(1).timeout
+	countdown.text = "Go!"
+	create_tween().tween_property(countdown, "modulate", Color(1, 1, 1, 0), .2)
+	await get_tree().create_timer(.2).timeout
+	
+	$AudioStreamPlayer.play()
+	game_on = true
 	
 	score1 = 0
 	score2 = 0
@@ -41,8 +55,6 @@ func _ready() -> void:
 	
 	is_recording1 = true
 	is_recording2 = true
-	
-	winning_player = player1
 	
 	timer.start(game_length)
 

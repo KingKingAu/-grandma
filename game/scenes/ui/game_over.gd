@@ -1,5 +1,7 @@
 extends Control
 
+#@export var main_menu: PackedScene
+
 @export var bg: TileMap
 @export var menu: Control
 
@@ -47,3 +49,7 @@ func animation():
 	var tween_menu = create_tween()
 	tween_menu.tween_property(menu, "modulate", Color(1, 1, 1), 1)
 	await tween_menu.finished
+	
+	await get_tree().create_timer(3).timeout
+	
+	#get_tree().change_scene_to_packed(main_menu)

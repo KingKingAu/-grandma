@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cav3aoalxsxr1" path="res://icon.svg" id="1_60xr3"]
 [ext_resource type="Script" uid="uid://rs35i3qnrdgb" path="res://scenes/ui/game_over.gd" id="1_fu4wh"]
+[ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_4583b"]
 [ext_resource type="FontFile" uid="uid://cnbwr5cqxs8gr" path="res://assets/Abaddon_Fonts_v1.2/Abaddon Bold.ttf" id="3_x6o8e"]
 [ext_resource type="Texture2D" uid="uid://c80vs2tfh4d4m" path="res://assets/art/fg.png" id="4_o6b8n"]
 [ext_resource type="Texture2D" uid="uid://w1wtct7mq5o4" path="res://assets/art/bg.png" id="5_4583b"]
@@ -84,6 +85,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fu4wh")
+main_menu = ExtResource("2_4583b")
 bg = NodePath("bg")
 menu = NodePath("bg/menu")
 lab_score1 = NodePath("bg/menu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/score1")

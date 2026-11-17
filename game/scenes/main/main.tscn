@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://dos2mdl8t6ivp" path="res://scenes/main/level_prototype.gd" id="4_l3cfh"]
 [ext_resource type="FontFile" uid="uid://cnbwr5cqxs8gr" path="res://assets/Abaddon_Fonts_v1.2/Abaddon Bold.ttf" id="4_ow5a4"]
 [ext_resource type="Texture2D" uid="uid://c80vs2tfh4d4m" path="res://assets/art/fg.png" id="4_yyfjg"]
-[ext_resource type="PackedScene" uid="uid://uboxea4uie0p" path="res://scenes/ui/game_over.tscn" id="6_ow5a4"]
+[ext_resource type="PackedScene" uid="uid://bfqfccwsvfy1f" path="res://scenes/ui/main_menu.tscn" id="6_ow5a4"]
 [ext_resource type="Texture2D" uid="uid://dxvumdohunff2" path="res://assets/art/crown.png" id="8_a8run"]
 [ext_resource type="AudioStream" uid="uid://d1fk38auoue8b" path="res://assets/Week 20.1 - Magnetic Tape SCUFFED.ogg" id="9_b1x3f"]
 
@@ -33,7 +33,7 @@ height = 1280
 fill_from = Vector2(1, 0)
 fill_to = Vector2(0, 0)
 
-[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("crown", "player1", "player2", "level1", "level2", "timer")]
+[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("crown", "player1", "player2", "level1", "level2", "timer", "countdown")]
 script = ExtResource("1_hyk8p")
 crown = NodePath("Crown")
 player1 = NodePath("player")
@@ -43,6 +43,7 @@ level2 = NodePath("level prototype2")
 game_length = 50.0
 timer = NodePath("ui/bg/VBoxContainer/MarginContainer/HBoxContainer/Timer")
 game_over_menu = ExtResource("6_ow5a4")
+countdown = NodePath("ui/countdown")
 
 [node name="bg" type="ColorRect" parent="." unique_id=1126892988]
 anchors_preset = 15
@@ -155,7 +156,7 @@ label_settings = SubResource("LabelSettings_l3cfh")
 horizontal_alignment = 1
 
 [node name="player" parent="." unique_id=1740188011 node_paths=PackedStringArray("main") instance=ExtResource("2_iuonh")]
-position = Vector2(-400, -115)
+position = Vector2(-400, -95)
 scale = Vector2(0.5, 0.5)
 main = NodePath("..")
 JUMP_VELOCITY = -600.0
@@ -443,9 +444,27 @@ step = 0.001
 value = 1.0
 fill_mode = 3
 
+[node name="countdown" type="Label" parent="ui" unique_id=317214507]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -144.0
+offset_right = 56.0
+offset_bottom = 144.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_ow5a4")
+theme_override_font_sizes/font_size = 256
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=907999614]
 stream = ExtResource("9_b1x3f")
-autoplay = true
 
 [connection signal="body_entered" from="death1" to="." method="_on_death_1_body_entered"]
 [connection signal="body_entered" from="death2" to="." method="_on_death_2_body_entered"]

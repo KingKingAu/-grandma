@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bfqfccwsvfy1f"]
 
 [ext_resource type="Script" uid="uid://ci4mopa3jqi0m" path="res://scenes/ui/main_menu.gd" id="1_x2yvf"]
+[ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_btxxm"]
 [ext_resource type="Texture2D" uid="uid://c80vs2tfh4d4m" path="res://assets/art/fg.png" id="2_uhagc"]
 [ext_resource type="Texture2D" uid="uid://w1wtct7mq5o4" path="res://assets/art/bg.png" id="3_btxxm"]
 [ext_resource type="Texture2D" uid="uid://cav3aoalxsxr1" path="res://icon.svg" id="4_wb0q5"]
@@ -77,7 +78,7 @@ texture = ExtResource("4_wb0q5")
 [sub_resource type="TileSet" id="TileSet_7suek"]
 sources/0 = SubResource("TileSetAtlasSource_8g5eo")
 
-[node name="main menu" type="Control" unique_id=1133607723 node_paths=PackedStringArray("bg", "menu")]
+[node name="main menu" type="Control" unique_id=1133607723 node_paths=PackedStringArray("bg", "menu", "custom_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,8 +86,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x2yvf")
+main = ExtResource("2_btxxm")
 bg = NodePath("bg")
 menu = NodePath("bg/menu")
+custom_button = NodePath("bg/menu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/custom")
 
 [node name="black" type="ColorRect" parent="." unique_id=1790803181]
 layout_mode = 1
@@ -291,10 +294,17 @@ size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("6_uhagc")
 text = "??? secs"
 
-[node name="custom time" type="TextEdit" parent="bg/menu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=572878963]
+[node name="custom time" type="SpinBox" parent="bg/menu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1620950369]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("6_uhagc")
-placeholder_text = "Custom time (in seconds)"
+min_value = 1.0
+max_value = 99999.0
+value = 1.0
+alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1964830810]
+
+[connection signal="pressed" from="bg/menu/MarginContainer/VBoxContainer/HBoxContainer2/30" to="." method="_on_30_pressed"]
+[connection signal="pressed" from="bg/menu/MarginContainer/VBoxContainer/HBoxContainer2/60" to="." method="_on_60_pressed"]
+[connection signal="pressed" from="bg/menu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/custom" to="." method="_on_custom_pressed"]
+[connection signal="value_changed" from="bg/menu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/custom time" to="." method="_on_custom_time_value_changed"]
