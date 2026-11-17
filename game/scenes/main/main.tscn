@@ -5,12 +5,29 @@
 [ext_resource type="Script" uid="uid://dqoyf4y4ksly6" path="res://scenes/main/ui.gd" id="4_6q06x"]
 [ext_resource type="Script" uid="uid://dos2mdl8t6ivp" path="res://scenes/main/level_prototype.gd" id="4_l3cfh"]
 [ext_resource type="FontFile" uid="uid://cnbwr5cqxs8gr" path="res://assets/Abaddon_Fonts_v1.2/Abaddon Bold.ttf" id="4_ow5a4"]
+[ext_resource type="PackedScene" uid="uid://uboxea4uie0p" path="res://scenes/ui/game_over.tscn" id="6_ow5a4"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_g4v7s"]
+[sub_resource type="Gradient" id="Gradient_57qmd"]
+colors = PackedColorArray(0, 0, 0, 0, 0.38413596, 0.4965219, 0.7110481, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yyfjg"]
+noise_type = 0
+seed = 3
+frequency = 0.0351
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g4v7s"]
+width = 32
+height = 9
+noise = SubResource("FastNoiseLite_yyfjg")
+color_ramp = SubResource("Gradient_57qmd")
+seamless = true
+seamless_blend_skirt = 0.581
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3cfh"]
 font = ExtResource("4_ow5a4")
 font_size = 32
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_g4v7s"]
 
 [sub_resource type="Gradient" id="Gradient_k2fmo"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
@@ -34,7 +51,81 @@ player1 = NodePath("player")
 player2 = NodePath("player2")
 level1 = NodePath("level prototype")
 level2 = NodePath("level prototype2")
+game_length = 919119.0
 timer = NodePath("ui/bg/VBoxContainer/MarginContainer/HBoxContainer/Timer")
+game_over_menu = ExtResource("6_ow5a4")
+
+[node name="level prototype" type="Node2D" parent="." unique_id=1705298986 node_paths=PackedStringArray("main", "players", "rewind_metre")]
+position = Vector2(0, -180)
+script = ExtResource("4_l3cfh")
+main = NodePath("..")
+players = [NodePath("../player"), NodePath("../player2")]
+rewind_metre = NodePath("../ui/bg/VBoxContainer/1/HBoxContainer/rewind_meter")
+
+[node name="bg" type="ColorRect" parent="level prototype" unique_id=1126892988]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -180.0
+offset_right = 640.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043137256, 0.05882353, 0.09803922, 1)
+
+[node name="midground back" type="Parallax2D" parent="level prototype" unique_id=1508657033]
+scroll_scale = Vector2(0.3, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="level prototype/midground back" unique_id=2071965068]
+scale = Vector2(40, 40)
+
+[node name="midground front" type="Parallax2D" parent="level prototype" unique_id=289552164]
+scroll_scale = Vector2(0.5, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="level prototype/midground front" unique_id=749943961]
+scale = Vector2(40, 40)
+texture = SubResource("NoiseTexture2D_g4v7s")
+
+[node name="Label" type="Label" parent="level prototype" unique_id=665528264]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -481.0
+offset_top = -90.0
+offset_right = -319.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+text = "WASD to move
+SHIFT (left) to rewind"
+label_settings = SubResource("LabelSettings_l3cfh")
+horizontal_alignment = 1
+
+[node name="level prototype2" type="Node2D" parent="." unique_id=1485788718 node_paths=PackedStringArray("main", "players", "rewind_metre")]
+position = Vector2(0, 180)
+script = ExtResource("4_l3cfh")
+main = NodePath("..")
+player_number = 2
+players = [NodePath("../player"), NodePath("../player2")]
+rewind_metre = NodePath("../ui/bg/VBoxContainer/2/HBoxContainer/rewind_meter")
+
+[node name="Label" type="Label" parent="level prototype2" unique_id=1401860222]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -486.5
+offset_top = -90.0
+offset_right = -313.5
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+text = "Arrow keys to move
+SHIFT (right) to rewind"
+label_settings = SubResource("LabelSettings_l3cfh")
+horizontal_alignment = 1
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=764908899]
 
@@ -58,7 +149,7 @@ position = Vector2(0, 180)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="death1" unique_id=128378664]
-position = Vector2(0, 190)
+position = Vector2(0, 380)
 shape = SubResource("WorldBoundaryShape2D_g4v7s")
 
 [node name="death2" type="Area2D" parent="." unique_id=719452690]
@@ -67,53 +158,8 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="death2" unique_id=1492621718]
-position = Vector2(0, 550)
+position = Vector2(0, 740)
 shape = SubResource("WorldBoundaryShape2D_g4v7s")
-
-[node name="level prototype" type="Node2D" parent="." unique_id=1705298986 node_paths=PackedStringArray("main", "rewind_metre")]
-position = Vector2(0, -180)
-script = ExtResource("4_l3cfh")
-main = NodePath("..")
-rewind_metre = NodePath("../ui/bg/VBoxContainer/1/HBoxContainer/rewind_meter")
-
-[node name="Label" type="Label" parent="level prototype" unique_id=665528264]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -481.0
-offset_top = -90.0
-offset_right = -319.0
-offset_bottom = -41.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-text = "WASD to move
-SHIFT (left) to rewind"
-label_settings = SubResource("LabelSettings_l3cfh")
-horizontal_alignment = 1
-
-[node name="level prototype2" type="Node2D" parent="." unique_id=1485788718 node_paths=PackedStringArray("main", "rewind_metre")]
-position = Vector2(0, 180)
-script = ExtResource("4_l3cfh")
-main = NodePath("..")
-player_number = 2
-rewind_metre = NodePath("../ui/bg/VBoxContainer/2/HBoxContainer/rewind_meter")
-
-[node name="Label" type="Label" parent="level prototype2" unique_id=1401860222]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -486.5
-offset_top = -90.0
-offset_right = -313.5
-offset_bottom = -41.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 0
-text = "Arrow keys to move
-SHIFT (right) to rewind"
-label_settings = SubResource("LabelSettings_l3cfh")
-horizontal_alignment = 1
 
 [node name="ui" type="Control" parent="." unique_id=1831061031 node_paths=PackedStringArray("main", "timer", "score1", "level1", "score2", "level2")]
 layout_mode = 3
@@ -188,6 +234,7 @@ custom_minimum_size = Vector2(80, 100)
 layout_mode = 2
 size_flags_vertical = 1
 max_value = 1.0
+step = 0.001
 value = 1.0
 fill_mode = 3
 
@@ -248,6 +295,7 @@ custom_minimum_size = Vector2(80, 100)
 layout_mode = 2
 size_flags_vertical = 1
 max_value = 1.0
+step = 0.001
 value = 1.0
 fill_mode = 3
 

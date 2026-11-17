@@ -1,19 +1,71 @@
 [gd_scene format=3 uid="uid://cfhprpv5h8b6o"]
 
-[ext_resource type="Texture2D" uid="uid://cav3aoalxsxr1" path="res://icon.svg" id="1_8afob"]
 [ext_resource type="Script" uid="uid://dow7r7mgjmclf" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="Texture2D" uid="uid://d3vcn15vwvm2d" path="res://assets/art/player.png" id="3_gmlin"]
+[ext_resource type="Shader" uid="uid://cjgob2br4vww4" path="res://scenes/player/colour_change.gdshader" id="4_lvxji"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4v7s"]
 radius = 31.016125
 
-[node name="player" type="CharacterBody2D" unique_id=1740188011 node_paths=PackedStringArray("coyote_timer", "jump_buffer_timer")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ow5a4"]
+resource_local_to_scene = true
+shader = ExtResource("4_lvxji")
+shader_parameter/apply = false
+shader_parameter/target_colour = Color(0.5921569, 0.9019608, 0.9647059, 1)
+shader_parameter/replace_colour = Color(0.92156863, 0.65882355, 0.6901961, 1)
+shader_parameter/tolerance = 0.05
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvxji"]
+atlas = ExtResource("3_gmlin")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p47bc"]
+atlas = ExtResource("3_gmlin")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75vfm"]
+atlas = ExtResource("3_gmlin")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0owmy"]
+atlas = ExtResource("3_gmlin")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvxji")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p47bc")
+}],
+"loop": 1,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75vfm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0owmy")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
+}]
+
+[node name="player" type="CharacterBody2D" unique_id=1740188011 node_paths=PackedStringArray("coyote_timer", "jump_buffer_timer", "anim")]
 script = ExtResource("1_dovo2")
 coyote_timer = NodePath("coyote")
 jump_buffer_timer = NodePath("jump_buffer")
-
-[node name="Icon" type="Sprite2D" parent="." unique_id=1778202872]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_8afob")
+anim = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1178410566]
 shape = SubResource("CircleShape2D_g4v7s")
@@ -23,3 +75,9 @@ one_shot = true
 
 [node name="jump_buffer" type="Timer" parent="." unique_id=488421630]
 one_shot = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1711782834]
+material = SubResource("ShaderMaterial_ow5a4")
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"run"

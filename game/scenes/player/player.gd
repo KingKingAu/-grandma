@@ -12,12 +12,15 @@ extends CharacterBody2D
 
 @export var target_x = -400
 
+@export var anim: AnimatedSprite2D
+
 var speed_modifier := 1.0
 var was_on_floor := false
 
 func _ready() -> void:
 	speed_modifier = 1.0
 	was_on_floor = false
+	anim.material.set_shader_parameter("apply", player_number == 2)
 
 func _physics_process(delta: float) -> void:
 	
@@ -42,7 +45,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y /= 2.0
 	
 	if not is_on_floor():
-			velocity += get_gravity() * delta
+		anim.play("jump")
+		velocity += get_gravity() * delta
 	
 	velocity.x = (target_x - position.x) * 10.0
 	
