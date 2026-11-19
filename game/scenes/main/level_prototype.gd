@@ -5,7 +5,7 @@ extends Node2D
 @export var players: Array[CharacterBody2D]
 var player: CharacterBody2D
 var speed_modifier: = 1.0
-@export var rewind_metre: ProgressBar
+@export var rewind_metre: TextureProgressBar
 
 @export var start_speed := 10.0
 @export var speed := 10.0
@@ -46,6 +46,29 @@ func _ready() -> void:
 	else:
 		player = players[1]
 	disabled = false
+	
+	while next_x + position.x < HALF_WIDTH + tile_size:
+		if stretch_remains <= 0:
+			next_stretch()
+		
+		var has_tile_above = false
+		var has_tile_below = false
+		for row in range(3):
+			if current_pattern[row] == 1 and current_pattern[clamp(row+1, 0, 2)] == 1:
+				has_tile_below = true
+			if current_pattern[row] == 1:
+				spawn_tile(next_x, lanes[row], has_tile_above, has_tile_below)
+				has_tile_above = true
+			else:
+				has_tile_above = false
+				
+		next_x += tile_size
+		stretch_remains -= 1
+	
+	for layer in parallax_layers:
+		if layer:
+			layer.scroll_offset.x = -global_position.x * layer.scroll_scale.x
+
 
 func _process(delta: float) -> void:
 	
@@ -72,14 +95,12 @@ func _process(delta: float) -> void:
 	
 	for tile in get_children():
 		if tile is StaticBody2D:
-			if tile.global_position.x < -HALF_WIDTH * 5 - tile_size:
+			if tile.global_position.x < -HALF_WIDTH * 10 - tile_size:
 				tile.queue_free()
 	
 	for layer in parallax_layers:
 		if layer:
 			layer.scroll_offset.x = -global_position.x * layer.scroll_scale.x
-
-
 
 func _physics_process(delta: float) -> void:
 	

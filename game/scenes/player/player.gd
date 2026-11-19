@@ -28,9 +28,6 @@ func _physics_process(delta: float) -> void:
 	if !main.game_on:
 		return
 	
-	if !(player_number == 1 and main.is_recording1) and !(player_number == 2 and main.is_recording2):
-		return
-	
 	if player_number == 2 and position.y <= 0:
 		anim.hide()
 	elif player_number == 1 and position.y <= -360:
@@ -43,6 +40,9 @@ func _physics_process(delta: float) -> void:
 		arrow.global_position.y = 40
 	else:
 		arrow.global_position.y = -320
+		
+	if !(player_number == 1 and main.is_recording1) and !(player_number == 2 and main.is_recording2):
+		return
 	
 	if was_on_floor and !is_on_floor() and velocity.y >= 0.0:
 		coyote_timer.start(coyote_time)

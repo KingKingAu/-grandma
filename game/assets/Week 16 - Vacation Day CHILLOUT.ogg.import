@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dlw8qbr4boxlo"
+path="res://.godot/imported/Week 16 - Vacation Day CHILLOUT.ogg-4afe9c9fc51d2a1a78d23ee2ca797bde.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Week 16 - Vacation Day CHILLOUT.ogg"
+dest_files=["res://.godot/imported/Week 16 - Vacation Day CHILLOUT.ogg-4afe9c9fc51d2a1a78d23ee2ca797bde.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

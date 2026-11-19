@@ -19,6 +19,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 	for label in labels:
 		original_positions.append(label.global_position)
+		
+	timer.text = str(roundi(main.timer.time_left + 0.25))
 
 func _process(delta: float) -> void:
 	

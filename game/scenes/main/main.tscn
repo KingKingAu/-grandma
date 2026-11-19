@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://dv5b327pv0xek"]
 
 [ext_resource type="Script" uid="uid://capd03go4kgdf" path="res://scenes/main/main.gd" id="1_hyk8p"]
+[ext_resource type="PackedScene" uid="uid://uboxea4uie0p" path="res://scenes/ui/game_over.tscn" id="2_a8run"]
 [ext_resource type="PackedScene" uid="uid://cfhprpv5h8b6o" path="res://scenes/player/player.tscn" id="2_iuonh"]
 [ext_resource type="Script" uid="uid://dqoyf4y4ksly6" path="res://scenes/main/ui.gd" id="4_6q06x"]
 [ext_resource type="Texture2D" uid="uid://w1wtct7mq5o4" path="res://assets/art/bg.png" id="4_hujxm"]
 [ext_resource type="Script" uid="uid://dos2mdl8t6ivp" path="res://scenes/main/level_prototype.gd" id="4_l3cfh"]
 [ext_resource type="FontFile" uid="uid://cnbwr5cqxs8gr" path="res://assets/Abaddon_Fonts_v1.2/Abaddon Bold.ttf" id="4_ow5a4"]
 [ext_resource type="Texture2D" uid="uid://c80vs2tfh4d4m" path="res://assets/art/fg.png" id="4_yyfjg"]
-[ext_resource type="PackedScene" uid="uid://bfqfccwsvfy1f" path="res://scenes/ui/main_menu.tscn" id="6_ow5a4"]
 [ext_resource type="Texture2D" uid="uid://dxvumdohunff2" path="res://assets/art/crown.png" id="8_a8run"]
 [ext_resource type="AudioStream" uid="uid://d1fk38auoue8b" path="res://assets/Week 20.1 - Magnetic Tape SCUFFED.ogg" id="9_b1x3f"]
+[ext_resource type="Texture2D" uid="uid://b4jv32wnbemx5" path="res://assets/art/rewind_empty.png" id="10_blune"]
+[ext_resource type="Texture2D" uid="uid://cd0k6e21uckg5" path="res://assets/art/rewind_fill.png" id="11_th5th"]
+[ext_resource type="AudioStream" uid="uid://uakaseljeaik" path="res://assets/transcendedlifting-race-start-beeps-125125.mp3" id="13_th5th"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3cfh"]
 font = ExtResource("4_ow5a4")
@@ -33,7 +36,7 @@ height = 1280
 fill_from = Vector2(1, 0)
 fill_to = Vector2(0, 0)
 
-[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("crown", "player1", "player2", "level1", "level2", "timer", "countdown")]
+[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("crown", "player1", "player2", "level1", "level2", "timer", "countdown", "countsound", "rewind1", "rewind2", "music")]
 script = ExtResource("1_hyk8p")
 crown = NodePath("Crown")
 player1 = NodePath("player")
@@ -42,8 +45,12 @@ level1 = NodePath("level prototype")
 level2 = NodePath("level prototype2")
 game_length = 50.0
 timer = NodePath("ui/bg/VBoxContainer/MarginContainer/HBoxContainer/Timer")
-game_over_menu = ExtResource("6_ow5a4")
+game_over_menu = ExtResource("2_a8run")
 countdown = NodePath("ui/countdown")
+countsound = NodePath("countsound")
+rewind1 = NodePath("rewind arrow1")
+rewind2 = NodePath("rewind arrow2")
+music = NodePath("music")
 
 [node name="bg" type="ColorRect" parent="." unique_id=1126892988]
 anchors_preset = 15
@@ -61,7 +68,7 @@ position = Vector2(0, -180)
 script = ExtResource("4_l3cfh")
 main = NodePath("..")
 players = [NodePath("../player"), NodePath("../player2")]
-rewind_metre = NodePath("../ui/bg/VBoxContainer/1/HBoxContainer/rewind_meter")
+rewind_metre = NodePath("../ui/bg/VBoxContainer/1/HBoxContainer/TextureProgressBar")
 parallax_layers = [NodePath("bg"), NodePath("fg")]
 
 [node name="bg" type="Parallax2D" parent="level prototype" unique_id=60343241]
@@ -155,6 +162,11 @@ SHIFT (left) to rewind"
 label_settings = SubResource("LabelSettings_l3cfh")
 horizontal_alignment = 1
 
+[node name="Crown" type="Sprite2D" parent="." unique_id=60651226]
+position = Vector2(-400, -135)
+scale = Vector2(4, 4)
+texture = ExtResource("8_a8run")
+
 [node name="player" parent="." unique_id=1740188011 node_paths=PackedStringArray("main") instance=ExtResource("2_iuonh")]
 position = Vector2(-400, -95)
 scale = Vector2(0.5, 0.5)
@@ -178,7 +190,7 @@ script = ExtResource("4_l3cfh")
 main = NodePath("..")
 player_number = 2
 players = [NodePath("../player"), NodePath("../player2")]
-rewind_metre = NodePath("../ui/bg/VBoxContainer/2/HBoxContainer/rewind_meter")
+rewind_metre = NodePath("../ui/bg/VBoxContainer/2/HBoxContainer/TextureProgressBar")
 parallax_layers = [NodePath("bg"), NodePath("fg")]
 
 [node name="bg" type="Parallax2D" parent="level prototype2" unique_id=1836610260]
@@ -207,7 +219,7 @@ texture = ExtResource("4_yyfjg")
 flip_h = true
 
 [node name="fg" type="Parallax2D" parent="level prototype2" unique_id=954374925]
-modulate = Color(0.38958883, 0.13566655, 0.2584177, 1)
+modulate = Color(0.47843137, 0.13725491, 0.25882354, 1)
 scale = Vector2(0.5, 0.5)
 scroll_scale = Vector2(0.5, 1)
 scroll_offset = Vector2(0, 10)
@@ -283,9 +295,46 @@ main = NodePath("..")
 player_number = 2
 JUMP_VELOCITY = -600.0
 
-[node name="Crown" type="Sprite2D" parent="." unique_id=60651226]
-scale = Vector2(4, 4)
-texture = ExtResource("8_a8run")
+[node name="rewind arrow1" type="Label" parent="." unique_id=1130490014]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -300.0
+offset_right = -58.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.23137255, 0.35686275, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("4_ow5a4")
+theme_override_font_sizes/font_size = 256
+text = "<<"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="rewind arrow2" type="Label" parent="." unique_id=2016215200]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = 60.0
+offset_right = -58.0
+offset_bottom = 348.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.4, 0.23921569, 0.21176471, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("4_ow5a4")
+theme_override_font_sizes/font_size = 256
+text = "<<"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="death1" type="Area2D" parent="." unique_id=1726322474]
 position = Vector2(0, 180)
@@ -375,6 +424,7 @@ text = "Player 1"
 label_settings = SubResource("LabelSettings_l3cfh")
 
 [node name="rewind_meter" type="ProgressBar" parent="ui/bg/VBoxContainer/1/HBoxContainer" unique_id=332415855]
+visible = false
 custom_minimum_size = Vector2(80, 100)
 layout_mode = 2
 size_flags_vertical = 1
@@ -382,6 +432,18 @@ max_value = 1.0
 step = 0.001
 value = 1.0
 fill_mode = 3
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="ui/bg/VBoxContainer/1/HBoxContainer" unique_id=2055313230]
+modulate = Color(0.23137255, 0.35686275, 0.4, 1)
+custom_minimum_size = Vector2(60, 250)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 0.3
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("10_blune")
+texture_progress = ExtResource("11_th5th")
 
 [node name="MarginContainer" type="MarginContainer" parent="ui/bg/VBoxContainer" unique_id=1973515108]
 layout_mode = 2
@@ -436,6 +498,7 @@ text = "Player 2"
 label_settings = SubResource("LabelSettings_l3cfh")
 
 [node name="rewind_meter" type="ProgressBar" parent="ui/bg/VBoxContainer/2/HBoxContainer" unique_id=141413045]
+visible = false
 custom_minimum_size = Vector2(80, 100)
 layout_mode = 2
 size_flags_vertical = 1
@@ -443,6 +506,18 @@ max_value = 1.0
 step = 0.001
 value = 1.0
 fill_mode = 3
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="ui/bg/VBoxContainer/2/HBoxContainer" unique_id=1926831847]
+modulate = Color(0.4, 0.23921569, 0.21176471, 1)
+custom_minimum_size = Vector2(60, 250)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 0.3
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = ExtResource("10_blune")
+texture_progress = ExtResource("11_th5th")
 
 [node name="countdown" type="Label" parent="ui" unique_id=317214507]
 layout_mode = 1
@@ -463,8 +538,11 @@ text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=907999614]
+[node name="music" type="AudioStreamPlayer" parent="." unique_id=907999614]
 stream = ExtResource("9_b1x3f")
+
+[node name="countsound" type="AudioStreamPlayer" parent="." unique_id=13051898]
+stream = ExtResource("13_th5th")
 
 [connection signal="body_entered" from="death1" to="." method="_on_death_1_body_entered"]
 [connection signal="body_entered" from="death2" to="." method="_on_death_2_body_entered"]

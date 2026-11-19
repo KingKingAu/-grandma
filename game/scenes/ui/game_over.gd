@@ -1,28 +1,28 @@
 extends Control
 
-#@export var main_menu: PackedScene
-
+@export var black: ColorRect
 @export var bg: TileMap
 @export var menu: Control
+@export var canvasgroup: CanvasGroup
 
 @export var lab_score1: Label
 @export var lab_score2: Label
 
 @export var result: Label
 
-var score1
-var score2
+var main: Node2D
 
 func _ready() -> void:
-	modulate = Color(1, 1, 1, 0)
+	black.modulate = Color(1, 1, 1, 0)
+	canvasgroup.self_modulate = Color(1, 1, 1, 0)
 	menu.modulate = Color(1, 1, 1, 0)
 	
-	lab_score1.text = str(score1)
-	lab_score2.text = str(score2)
+	lab_score1.text = str(main.score1)
+	lab_score2.text = str(main.score2)
 	
-	if score1 > score2:
+	if main.score1 > main.score2:
 		result.text = "Player 1 WINS!"
-	elif score2 > score1:
+	elif main.score2 > main.score1:
 		result.text = "Player 2 WINS!"
 	else:		result.text = "TIE!"
 	
@@ -33,8 +33,13 @@ func _process(delta: float) -> void:
 	pass
 
 func animation():
+	
+	var tween_black = create_tween()
+	tween_black.tween_property(black, "modulate", Color(1, 1, 1), 1)
+	await tween_black.finished
+	
 	var tween_mod = create_tween()
-	tween_mod.tween_property(self, "modulate", Color(1, 1, 1), 1)
+	tween_mod.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1), 1)
 	await tween_mod.finished
 	
 	var tween_bg = create_tween()
@@ -52,4 +57,9 @@ func animation():
 	
 	await get_tree().create_timer(3).timeout
 	
-	#get_tree().change_scene_to_packed(main_menu)
+	var fade = create_tween().set_parallel()
+	fade.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1, 0), 1)
+	fade.tween_property(main.music, "volume_linear", 0.1, 2)
+	await fade.finished
+	
+	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")

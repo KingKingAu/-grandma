@@ -2,13 +2,20 @@ extends Control
 
 @export var bg: TileMap
 @export var menu: Control
+@export var canvasgroup: CanvasGroup
 
 @export var custom_button: Button
+@export var custom_text: SpinBox
+
+@export var music: AudioStreamPlayer
 
 var starting := false
 
 func _ready() -> void:
-	modulate = Color(1, 1, 1, 0)
+	music.volume_linear = 0
+	create_tween().tween_property(music, "volume_linear", 1, 2)
+	music.play()
+	canvasgroup.self_modulate = Color(1, 1, 1, 0)
 	menu.modulate = Color(1, 1, 1, 0)
 	starting = false
 	
@@ -17,11 +24,18 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if starting:
 		return
-	
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		var box = custom_text.get_line_edit()
+		if box.has_focus() and !custom_text.get_global_rect().has_point(event.global_position):
+			box.release_focus()
+			custom_text.apply()
 
 func animation():
+	
 	var tween_mod = create_tween()
-	tween_mod.tween_property(self, "modulate", Color(1, 1, 1), 1)
+	tween_mod.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1), 1)
 	await tween_mod.finished
 	
 	var tween_bg = create_tween()
@@ -38,30 +52,33 @@ func animation():
 	await tween_menu.finished
 
 func start(time):
-	#var game = main.instantiate()
-	#game.game_length = time
-	#for child in get_children():
-		#child.queue_free()
-	#add_child(game)
-	pass
+	
+	var tween = create_tween().set_parallel()
+	tween.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1, 0), 1)
+	tween.tween_property(music, "volume_linear", 0.1, 2)
+	await tween.finished
+	
+	
+	Autoload.game_length = time
+	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
 
 func _on_custom_time_value_changed(value: float) -> void:
 	custom_button.text = str(int(value)) + " secs"
 
 func _on_30_pressed() -> void:
-	if !starting:
+	if starting:
 		return
 	starting = true
 	start(30.0)
 
 func _on_60_pressed() -> void:
-	if !starting:
+	if starting:
 		return
 	starting = true
 	start(60.0)
 
 func _on_custom_pressed() -> void:
-	if !starting:
+	if starting:
 		return
 	starting = true
 	start(float(custom_button.text.left(-5)))
