@@ -5,6 +5,27 @@
 [ext_resource type="FontFile" uid="uid://cnbwr5cqxs8gr" path="res://assets/Abaddon_Fonts_v1.2/Abaddon Bold.ttf" id="3_x6o8e"]
 [ext_resource type="Texture2D" uid="uid://c80vs2tfh4d4m" path="res://assets/art/fg.png" id="4_o6b8n"]
 [ext_resource type="Texture2D" uid="uid://w1wtct7mq5o4" path="res://assets/art/bg.png" id="5_4583b"]
+[ext_resource type="Shader" uid="uid://b37wsdconws7h" path="res://scenes/ui/particle.gdshader" id="6_b6337"]
+[ext_resource type="Texture2D" uid="uid://ogwr7ilthkvh" path="res://assets/art/particle.png" id="7_r6ix2"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o6b8n"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_o6b8n"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.74849516, 0.8326692, 1, 1, 0.7490196, 0.83137256, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b6337"]
+gradient = SubResource("Gradient_o6b8n")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_4583b"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.9999997, 0.85276127, 0.91844887, 1, 1, 0.83969295, 0.9108136, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r6ix2"]
+gradient = SubResource("Gradient_4583b")
+fill_from = Vector2(1, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o6b8n"]
 texture = ExtResource("1_60xr3")
@@ -75,6 +96,35 @@ texture = ExtResource("1_60xr3")
 
 [sub_resource type="TileSet" id="TileSet_g4v7s"]
 sources/0 = SubResource("TileSetAtlasSource_o6b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_trpi5"]
+shader = ExtResource("6_b6337")
+shader_parameter/is_x_threshold = true
+shader_parameter/threshold_x = 0.0
+shader_parameter/is_y_threshold = false
+shader_parameter/threshold_y = 0.0
+shader_parameter/colour1 = Color(0.60784316, 0.84705883, 0.9098039, 1)
+shader_parameter/colour2 = Color(0.9098039, 0.64705884, 0.59607846, 1)
+
+[sub_resource type="Gradient" id="Gradient_raeie"]
+offsets = PackedFloat32Array(0, 0.31557378, 0.7336066, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hxu8e"]
+gradient = SubResource("Gradient_raeie")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b6337"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(640, 360, 1)
+direction = Vector3(-1, 0.5, 0)
+spread = 20.0
+initial_velocity_min = 20.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 10, 0)
+scale_min = 0.79999995
+scale_max = 1.1999999
+color_ramp = SubResource("GradientTexture1D_hxu8e")
 
 [node name="game over" type="Control" unique_id=270488899 node_paths=PackedStringArray("black", "bg", "menu", "canvasgroup", "lab_score1", "lab_score2", "result")]
 layout_mode = 3
@@ -194,6 +244,18 @@ position = Vector2(0, 440)
 texture = ExtResource("5_4583b")
 flip_v = true
 
+[node name="gradient" type="Sprite2D" parent="CanvasGroup" unique_id=1154663898]
+material = SubResource("CanvasItemMaterial_o6b8n")
+position = Vector2(320, 0)
+scale = Vector2(10, 11.249999)
+texture = SubResource("GradientTexture2D_b6337")
+
+[node name="gradient2" type="Sprite2D" parent="CanvasGroup" unique_id=1767763483]
+material = SubResource("CanvasItemMaterial_o6b8n")
+position = Vector2(-320, 0)
+scale = Vector2(10, 11.25)
+texture = SubResource("GradientTexture2D_r6ix2")
+
 [node name="bg" type="TileMap" parent="CanvasGroup" unique_id=309127045]
 self_modulate = Color(0.8352941, 0.8509804, 1, 1)
 texture_filter = 4
@@ -292,3 +354,12 @@ theme_override_fonts/font = ExtResource("3_x6o8e")
 theme_override_font_sizes/font_size = 64
 text = "result"
 horizontal_alignment = 1
+
+[node name="particles" type="GPUParticles2D" parent="CanvasGroup" unique_id=702492210]
+material = SubResource("ShaderMaterial_trpi5")
+amount = 100
+texture = ExtResource("7_r6ix2")
+preprocess = 2.0
+randomness = 1.0
+visibility_rect = Rect2(-10, -10, 20, 20)
+process_material = SubResource("ParticleProcessMaterial_b6337")

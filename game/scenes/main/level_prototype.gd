@@ -37,7 +37,23 @@ var is_transition_gap := false
 
 var disabled := false
 
+var seed: int
+var rng = RandomNumberGenerator.new()
+
 func _ready() -> void:
+	if Autoload.split_seed and player_number == 2:
+		if Autoload.seed2 == "":
+			seed = randi()
+		else:
+			seed = Autoload.seed2.hash()
+	else:
+		if Autoload.seed == "":
+			seed = randi()
+		else:
+			seed = Autoload.seed.hash()
+	
+	rng.seed = seed
+	
 	current_pattern = [0, 0, 1]
 	stretch_remains = 18
 	is_transition_gap = false
@@ -183,16 +199,16 @@ func spawn_tile(x, y, has_tile_above, has_tile_below):
 
 func next_stretch() -> void:
 	if !is_transition_gap:
-		current_pattern = [[0, 0, 0], [0, 0, 1]].pick_random()
+		current_pattern = [[0, 0, 0], [0, 0, 1]][rng.randi_range(0, 1)]
 		is_transition_gap = true
-		stretch_remains = randi_range(2, 4)
+		stretch_remains = rng.randi_range(2, 4)
 		return
 	
 	is_transition_gap = false
-	var next_pat: Array = patterns.pick_random()
+	var next_pat: Array = patterns[rng.randi_range(0, patterns.size() - 1)]
 	
 	while next_pat == [0, 0, 0]:
-		next_pat = patterns.pick_random()
+		next_pat = patterns[rng.randi_range(0, patterns.size() - 1)]
 	
-	stretch_remains = randi_range(3, 6)
+	stretch_remains = rng.randi_range(3, 6)
 	current_pattern = next_pat

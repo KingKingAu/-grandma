@@ -116,7 +116,6 @@ func _physics_process(delta: float) -> void:
 		fliph1.append(player1.anim.flip_h)
 	
 	level1.rewind_metre.value = float(level_pos1.size() - 1) / 299.0
-	print(player_pos2.size())
 	if Input.is_action_pressed("2_reverse") and !level2.disabled and (!is_recording2 or player_pos2.size() >= min_frames) and player_pos2.size() > 2:
 		is_recording2 = false
 		

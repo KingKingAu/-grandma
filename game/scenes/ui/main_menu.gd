@@ -58,7 +58,6 @@ func start(time):
 	tween.tween_property(music, "volume_linear", 0.1, 2)
 	await tween.finished
 	
-	
 	Autoload.game_length = time
 	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
 
