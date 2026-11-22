@@ -14,7 +14,8 @@ var seed1_old := ""
 @export var seed2_lineedit: LineEdit
 var seed2_old := ""
 
-# Called when the node enters the scene tree for the first time.
+@export var credits: Container
+
 func _ready() -> void:
 	_on_randomiseboth_pressed()
 	_on_randomise1_pressed()
@@ -77,3 +78,18 @@ func _on_custom_time_text_changed(new_text: String) -> void:
 	else:
 		custom_time.text = custom_old
 	custom_time.caret_column = custom_time.text.length()
+
+
+func _on_credits_pressed() -> void:
+	credits.visible = !credits.visible
+	var mod: Color
+	if credits.visible:
+		mod = Color(1, 1, 1)
+	else:
+		mod = Color(1, 1, 1, 0)
+		credits.visible = true
+	
+	await create_tween().tween_property(credits, "modulate", mod, .5).finished
+	
+	if mod == Color(1, 1, 1, 0):
+		credits.visible = false
