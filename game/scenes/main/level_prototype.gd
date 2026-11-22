@@ -42,15 +42,9 @@ var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	if Autoload.split_seed and player_number == 2:
-		if Autoload.seed2 == "":
-			seed = randi()
-		else:
-			seed = Autoload.seed2.hash()
+		seed = Autoload.seed2.hash()
 	else:
-		if Autoload.seed == "":
-			seed = randi()
-		else:
-			seed = Autoload.seed.hash()
+		seed = Autoload.seed.hash()
 	
 	rng.seed = seed
 	
@@ -133,6 +127,11 @@ func _physics_process(delta: float) -> void:
 	var direction: float
 	
 	direction = Input.get_axis(str(player_number) + "_left", str(player_number) + "_right")
+	
+	if players[player_number - 1].position.x < -405 and direction > 0:
+		direction = 0
+	elif players[player_number - 1].position.x > -395 and direction < 0:
+		direction = 0
 	
 	if Input.is_action_pressed(str(player_number) + "_reverse") and rewind_metre.value > 0.0:
 		speed_modifier = clamp(speed_modifier - delta, 1.0/3.0, 1.0)

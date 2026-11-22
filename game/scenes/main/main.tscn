@@ -37,25 +37,6 @@ height = 1280
 fill_from = Vector2(1, 0)
 fill_to = Vector2(0, 0)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_th5th"]
-blend_mode = 3
-
-[sub_resource type="Gradient" id="Gradient_th5th"]
-offsets = PackedFloat32Array(0, 0.6, 1)
-colors = PackedColorArray(0.74849516, 0.8326692, 1, 1, 0.7490196, 0.83137256, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_raeie"]
-gradient = SubResource("Gradient_th5th")
-fill_from = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_7smn1"]
-offsets = PackedFloat32Array(0, 0.6, 1)
-colors = PackedColorArray(0.9999997, 0.85276127, 0.91844887, 1, 1, 0.83969295, 0.9108136, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7smn1"]
-gradient = SubResource("Gradient_7smn1")
-fill_from = Vector2(1, 1)
-
 [sub_resource type="Shader" id="Shader_raeie"]
 code = "shader_type canvas_item;
 
@@ -114,10 +95,12 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_hxu8e"]
 gradient = SubResource("Gradient_raeie")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7smn1"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nvumn"]
+lifetime_randomness = 0.4
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(320, -423.93, 0)
 emission_shape = 3
-emission_box_extents = Vector3(640, 360, 1)
+emission_box_extents = Vector3(960, 2, 1)
 direction = Vector3(-1, 0.5, 0)
 spread = 20.0
 initial_velocity_min = 20.0
@@ -126,6 +109,25 @@ gravity = Vector3(0, 10, 0)
 scale_min = 0.79999995
 scale_max = 1.1999999
 color_ramp = SubResource("GradientTexture1D_hxu8e")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_th5th"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_th5th"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.74849516, 0.8326692, 1, 1, 0.7490196, 0.83137256, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_raeie"]
+gradient = SubResource("Gradient_th5th")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_7smn1"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0.9999997, 0.85276127, 0.91844887, 1, 1, 0.83969295, 0.9108136, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7smn1"]
+gradient = SubResource("Gradient_7smn1")
+fill_from = Vector2(1, 1)
 
 [node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("crown", "player1", "player2", "level1", "level2", "timer", "countdown", "countsound", "rewind1", "rewind2", "music")]
 script = ExtResource("1_hyk8p")
@@ -477,6 +479,16 @@ rotation = 1.5707964
 scale = Vector2(2, 1)
 texture = SubResource("GradientTexture2D_l3cfh")
 
+[node name="particles" type="GPUParticles2D" parent="ui" unique_id=1624898664]
+material = SubResource("ShaderMaterial_hxu8e")
+amount = 1000
+texture = ExtResource("10_7smn1")
+lifetime = 20.0
+preprocess = 100.0
+randomness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_nvumn")
+
 [node name="gradient4" type="Sprite2D" parent="ui" unique_id=1269832499]
 material = SubResource("CanvasItemMaterial_th5th")
 position = Vector2(0, 180)
@@ -640,15 +652,6 @@ theme_override_font_sizes/font_size = 256
 text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="particles" type="GPUParticles2D" parent="ui" unique_id=865923040]
-material = SubResource("ShaderMaterial_hxu8e")
-amount = 100
-texture = ExtResource("10_7smn1")
-preprocess = 2.0
-randomness = 1.0
-visibility_rect = Rect2(-10, -10, 20, 20)
-process_material = SubResource("ParticleProcessMaterial_7smn1")
 
 [node name="music" type="AudioStreamPlayer" parent="." unique_id=907999614]
 stream = ExtResource("9_b1x3f")

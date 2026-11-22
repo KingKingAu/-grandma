@@ -4,8 +4,7 @@ extends Control
 @export var menu: Control
 @export var canvasgroup: CanvasGroup
 
-@export var custom_button: Button
-@export var custom_text: SpinBox
+@export var custom_time: LineEdit
 
 @export var music: AudioStreamPlayer
 
@@ -24,13 +23,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if starting:
 		return
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		var box = custom_text.get_line_edit()
-		if box.has_focus() and !custom_text.get_global_rect().has_point(event.global_position):
-			box.release_focus()
-			custom_text.apply()
 
 func animation():
 	
@@ -61,9 +53,6 @@ func start(time):
 	Autoload.game_length = time
 	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
 
-func _on_custom_time_value_changed(value: float) -> void:
-	custom_button.text = str(int(value)) + " secs"
-
 func _on_30_pressed() -> void:
 	if starting:
 		return
@@ -80,4 +69,4 @@ func _on_custom_pressed() -> void:
 	if starting:
 		return
 	starting = true
-	start(float(custom_button.text.left(-5)))
+	start(float(custom_time.text))

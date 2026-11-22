@@ -29,9 +29,6 @@ func _ready() -> void:
 	animation()
 
 
-func _process(delta: float) -> void:
-	pass
-
 func animation():
 	
 	var tween_black = create_tween()
@@ -55,8 +52,17 @@ func animation():
 	tween_menu.tween_property(menu, "modulate", Color(1, 1, 1), 1)
 	await tween_menu.finished
 	
-	await get_tree().create_timer(3).timeout
+
+func _on_retry_pressed() -> void:
+	var fade = create_tween().set_parallel()
+	fade.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1, 0), 1)
+	fade.tween_property(main.music, "volume_linear", 0.1, 2)
+	await fade.finished
 	
+	get_tree().reload_current_scene()
+
+
+func _on_mainmenu_pressed() -> void:
 	var fade = create_tween().set_parallel()
 	fade.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1, 0), 1)
 	fade.tween_property(main.music, "volume_linear", 0.1, 2)

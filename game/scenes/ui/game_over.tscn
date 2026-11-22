@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://c80vs2tfh4d4m" path="res://assets/art/fg.png" id="4_o6b8n"]
 [ext_resource type="Texture2D" uid="uid://w1wtct7mq5o4" path="res://assets/art/bg.png" id="5_4583b"]
 [ext_resource type="Shader" uid="uid://b37wsdconws7h" path="res://scenes/ui/particle.gdshader" id="6_b6337"]
+[ext_resource type="Texture2D" uid="uid://bfjayqdkvy1vh" path="res://assets/art/button2.png" id="6_trpi5"]
+[ext_resource type="FontFile" uid="uid://b3siwu2ksu31u" path="res://assets/Abaddon_Fonts_v1.2/Abaddon Light.ttf" id="7_0mouq"]
 [ext_resource type="Texture2D" uid="uid://ogwr7ilthkvh" path="res://assets/art/particle.png" id="7_r6ix2"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o6b8n"]
@@ -97,7 +99,19 @@ texture = ExtResource("1_60xr3")
 [sub_resource type="TileSet" id="TileSet_g4v7s"]
 sources/0 = SubResource("TileSetAtlasSource_o6b8n")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_trpi5"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b6337"]
+bg_color = Color(0.078431375, 0.06666667, 0.10980392, 0.8627451)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.83137256, 0.60784316, 0.29411766, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b6337"]
 shader = ExtResource("6_b6337")
 shader_parameter/is_x_threshold = true
 shader_parameter/threshold_x = 0.0
@@ -106,17 +120,19 @@ shader_parameter/threshold_y = 0.0
 shader_parameter/colour1 = Color(0.60784316, 0.84705883, 0.9098039, 1)
 shader_parameter/colour2 = Color(0.9098039, 0.64705884, 0.59607846, 1)
 
-[sub_resource type="Gradient" id="Gradient_raeie"]
+[sub_resource type="Gradient" id="Gradient_r6ix2"]
 offsets = PackedFloat32Array(0, 0.31557378, 0.7336066, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_hxu8e"]
-gradient = SubResource("Gradient_raeie")
+gradient = SubResource("Gradient_r6ix2")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b6337"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_trpi5"]
+lifetime_randomness = 0.4
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(320, -423.93, 0)
 emission_shape = 3
-emission_box_extents = Vector3(640, 360, 1)
+emission_box_extents = Vector3(960, 2, 1)
 direction = Vector3(-1, 0.5, 0)
 spread = 20.0
 initial_velocity_min = 20.0
@@ -138,9 +154,9 @@ black = NodePath("black")
 bg = NodePath("CanvasGroup/bg")
 menu = NodePath("CanvasGroup/bg/menu")
 canvasgroup = NodePath("CanvasGroup")
-lab_score1 = NodePath("CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/score1")
-lab_score2 = NodePath("CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/score2")
-result = NodePath("CanvasGroup/bg/menu/MarginContainer/VBoxContainer/result")
+lab_score1 = NodePath("CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/score 1")
+lab_score2 = NodePath("CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2/score 2")
+result = NodePath("CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/result")
 
 [node name="black" type="ColorRect" parent="." unique_id=377326564]
 layout_mode = 1
@@ -279,87 +295,211 @@ offset_top = -240.0
 offset_right = 480.0
 offset_bottom = 224.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasGroup/bg/menu" unique_id=1602865808]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasGroup/bg/menu" unique_id=54731171]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasGroup/bg/menu/MarginContainer" unique_id=1742520407]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasGroup/bg/menu/CenterContainer" unique_id=1619365468]
+custom_minimum_size = Vector2(920, 424)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b6337")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer" unique_id=1223461608]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 28
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer" unique_id=1742520407]
 layout_mode = 2
 
-[node name="GAME OVER" type="Label" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer" unique_id=786333019]
+[node name="gameover" type="HBoxContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1067777393]
+custom_minimum_size = Vector2(840, 100)
 layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/gameover" unique_id=1415950722]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.51291424, 0.6336959, 0.8676562, 1)
+theme_override_colors/font_shadow_color = Color(0.5137255, 0.6313726, 0.8666667, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("3_x6o8e")
 theme_override_font_sizes/font_size = 64
-text = "GAME OVER!
-"
-horizontal_alignment = 1
+text = "GAME"
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer" unique_id=298200653]
+[node name="Label2" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/gameover" unique_id=1229680684]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.8898377, 0.5428101, 0.6917404, 1)
+theme_override_colors/font_shadow_color = Color(0.8901961, 0.5411765, 0.6901961, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("3_x6o8e")
+theme_override_font_sizes/font_size = 64
+text = "OVER"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=298200653]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2066985741]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2066985741]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PLAYER1 SCORE" type="Label" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2118069267]
+[node name="Label" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=306363132]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.51291424, 0.6336959, 0.8676562, 1)
+theme_override_colors/font_shadow_color = Color(0.5137255, 0.6313726, 0.8666667, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("3_x6o8e")
 theme_override_font_sizes/font_size = 48
 text = "Player 1 SCORE:"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="score1" type="Label" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1662536566]
+[node name="score 1" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=402943641]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.51291424, 0.6336959, 0.8676562, 1)
+theme_override_colors/font_shadow_color = Color(0.5137255, 0.6313726, 0.8666667, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("3_x6o8e")
 theme_override_font_sizes/font_size = 48
-text = "099999999"
+text = "000000000000"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1793338107]
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1793338107]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PLAYER2 SCORE" type="Label" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=2139407366]
+[node name="player2 score" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=368707273]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.8898377, 0.5428101, 0.6917404, 1)
+theme_override_colors/font_shadow_color = Color(0.8901961, 0.5411765, 0.6901961, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("3_x6o8e")
 theme_override_font_sizes/font_size = 48
 text = "Player 2 SCORE:"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="score2" type="Label" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=1255176021]
+[node name="score 2" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=336446487]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.8898377, 0.5428101, 0.6917404, 1)
+theme_override_colors/font_shadow_color = Color(0.8901961, 0.5411765, 0.6901961, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("3_x6o8e")
 theme_override_font_sizes/font_size = 48
-text = "099999999"
+text = "999999999"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="result" type="Label" parent="CanvasGroup/bg/menu/MarginContainer/VBoxContainer" unique_id=411647370]
+[node name="result" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=43126041]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.87067294, 0.6576932, 0.32052717, 1)
+theme_override_colors/font_shadow_color = Color(0.65882355, 0.4392157, 0, 0.3137255)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("3_x6o8e")
 theme_override_font_sizes/font_size = 64
 text = "result"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="particles" type="GPUParticles2D" parent="CanvasGroup" unique_id=702492210]
-material = SubResource("ShaderMaterial_trpi5")
-amount = 100
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer" unique_id=173301030]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 16
+
+[node name="retry" type="TextureButton" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1614536250]
+texture_filter = 1
+custom_minimum_size = Vector2(144, 96)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("6_trpi5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/retry" unique_id=1355928666]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.65882355, 0.4392157, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.5254902, 0.29803923, 0.13725491, 0.3137255)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_0mouq")
+theme_override_font_sizes/font_size = 32
+text = "Retry"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mainmenu" type="TextureButton" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1471884856]
+texture_filter = 1
+custom_minimum_size = Vector2(144, 96)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+texture_normal = ExtResource("6_trpi5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/mainmenu" unique_id=2020962780]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.65882355, 0.4392157, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.5254902, 0.29803923, 0.13725491, 0.3137255)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_0mouq")
+theme_override_font_sizes/font_size = 32
+text = "Main
+Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="particles" type="GPUParticles2D" parent="CanvasGroup" unique_id=957600395]
+material = SubResource("ShaderMaterial_b6337")
+amount = 1000
 texture = ExtResource("7_r6ix2")
-preprocess = 2.0
+lifetime = 20.0
+preprocess = 100.0
 randomness = 1.0
-visibility_rect = Rect2(-10, -10, 20, 20)
-process_material = SubResource("ParticleProcessMaterial_b6337")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_trpi5")
+
+[connection signal="pressed" from="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/mainmenu" to="." method="_on_mainmenu_pressed"]
