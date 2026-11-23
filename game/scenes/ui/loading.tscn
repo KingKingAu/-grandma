@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://drsewc31xu40x"]
+
+[ext_resource type="Script" uid="uid://bue72wcet5jjt" path="res://scenes/ui/loading.gd" id="1_wkfxc"]
+[ext_resource type="Texture2D" uid="uid://biwobwxn2qsc7" path="res://assets/art/logo_empty.png" id="4_gbjog"]
+[ext_resource type="Texture2D" uid="uid://bikmux5f2tset" path="res://assets/art/logo_fill.png" id="5_2b8us"]
+
+[node name="loading" type="Node2D" unique_id=917391982 node_paths=PackedStringArray("progress_bar")]
+script = ExtResource("1_wkfxc")
+progress_bar = NodePath("Control/TextureProgressBar")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1753464]
+
+[node name="Control" type="Control" parent="." unique_id=634850210]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1034690848]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.078431375, 0.06666667, 0.10980392, 1)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control" unique_id=371545531]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 353.0
+offset_top = 257.0
+offset_right = 1339.0
+offset_bottom = 213.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25, 0.25)
+pivot_offset = Vector2(5, 24)
+texture_under = ExtResource("4_gbjog")
+texture_progress = ExtResource("5_2b8us")

@@ -22,6 +22,8 @@ var rewind2_orig_pos: Vector2
 
 @export var music: AudioStreamPlayer
 
+@export var statics: Array[ColorRect] = []
+
 var player_pos1 := []
 var player_pos2 := []
 
@@ -102,7 +104,12 @@ func _physics_process(delta: float) -> void:
 			player1.position = player_pos1.pop_back()
 			level1.position = level_pos1.pop_back()
 			player1.anim.flip_h = fliph1.pop_back()
+		statics[0].show()
+		statics[0].material.set_shader_parameter("intensity", statics[0].material.get_shader_parameter("intensity") * 1.03)
+		statics[0].material.set_shader_parameter("intensity", clamp(statics[0].material.get_shader_parameter("intensity"), .1, 1))
 	else:
+		statics[0].material.set_shader_parameter("intensity", .1)
+		statics[0].hide()
 		is_recording1 = true
 		
 		create_tween().tween_property(rewind1, "modulate", Color(1, 1, 1, 0), 0.2)
@@ -131,7 +138,12 @@ func _physics_process(delta: float) -> void:
 			player2.position = player_pos2.pop_back()
 			level2.position = level_pos2.pop_back()
 			player2.anim.flip_h = fliph2.pop_back()
+		statics[1].show()
+		statics[1].material.set_shader_parameter("intensity", statics[1].material.get_shader_parameter("intensity") * 1.03)
+		statics[1].material.set_shader_parameter("intensity", clamp(statics[1].material.get_shader_parameter("intensity"), .1, 1))
 	else:
+		statics[1].material.set_shader_parameter("intensity", .1)
+		statics[1].hide()
 		is_recording2 = true
 		
 		create_tween().tween_property(rewind2, "modulate", Color(1, 1, 1, 0), 0.2)

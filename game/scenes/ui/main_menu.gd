@@ -51,7 +51,9 @@ func start(time):
 	await tween.finished
 	
 	Autoload.game_length = time
-	get_tree().change_scene_to_file("res://scenes/main/main.tscn")
+	
+	Autoload.next_scene_path = "res://scenes/main/main.tscn"
+	get_tree().change_scene_to_file("res://scenes/ui/loading.tscn")
 
 func _on_30_pressed() -> void:
 	if starting:

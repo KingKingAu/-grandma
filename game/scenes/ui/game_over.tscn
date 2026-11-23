@@ -143,6 +143,7 @@ scale_max = 1.1999999
 color_ramp = SubResource("GradientTexture1D_hxu8e")
 
 [node name="game over" type="Control" unique_id=270488899 node_paths=PackedStringArray("black", "bg", "menu", "canvasgroup", "lab_score1", "lab_score2", "result")]
+z_index = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -460,7 +461,7 @@ theme_override_colors/font_shadow_color = Color(0.5254902, 0.29803923, 0.1372549
 theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("7_0mouq")
 theme_override_font_sizes/font_size = 32
-text = "Retry"
+text = "Rematch"
 horizontal_alignment = 1
 vertical_alignment = 1
 

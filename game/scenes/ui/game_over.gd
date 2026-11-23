@@ -59,7 +59,8 @@ func _on_retry_pressed() -> void:
 	fade.tween_property(main.music, "volume_linear", 0.1, 2)
 	await fade.finished
 	
-	get_tree().reload_current_scene()
+	Autoload.next_scene_path = "res://scenes/main/main.tscn"
+	get_tree().change_scene_to_file("res://scenes/ui/loading.tscn")
 
 
 func _on_mainmenu_pressed() -> void:
@@ -68,4 +69,5 @@ func _on_mainmenu_pressed() -> void:
 	fade.tween_property(main.music, "volume_linear", 0.1, 2)
 	await fade.finished
 	
-	get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+	Autoload.next_scene_path = "res://scenes/ui/main_menu.tscn"
+	get_tree().change_scene_to_file("res://scenes/ui/loading.tscn")

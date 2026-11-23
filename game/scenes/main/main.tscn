@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b4jv32wnbemx5" path="res://assets/art/rewind_empty.png" id="10_blune"]
 [ext_resource type="Texture2D" uid="uid://cd0k6e21uckg5" path="res://assets/art/rewind_fill.png" id="11_th5th"]
 [ext_resource type="AudioStream" uid="uid://uakaseljeaik" path="res://assets/transcendedlifting-race-start-beeps-125125.mp3" id="13_th5th"]
+[ext_resource type="Shader" uid="uid://cflym4k4dtf71" path="res://scenes/main/static.gdshader" id="15_raeie"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l3cfh"]
 font = ExtResource("4_ow5a4")
@@ -129,7 +130,41 @@ colors = PackedColorArray(0.9999997, 0.85276127, 0.91844887, 1, 1, 0.83969295, 0
 gradient = SubResource("Gradient_7smn1")
 fill_from = Vector2(1, 1)
 
-[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("crown", "player1", "player2", "level1", "level2", "timer", "countdown", "countsound", "rewind1", "rewind2", "music")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7smn1"]
+resource_local_to_scene = true
+shader = ExtResource("15_raeie")
+shader_parameter/intensity = 0.10000000475
+shader_parameter/chroma_shift = 6.000000285
+shader_parameter/chroma_bleed = 1.0
+shader_parameter/saturation = 0.8
+shader_parameter/tint = Color(1, 0.96, 0.9, 1)
+shader_parameter/line_wobble = 1.2
+shader_parameter/tracking_amount = 0.35
+shader_parameter/tracking_speed = 0.6
+shader_parameter/tracking_height = 0.08
+shader_parameter/head_switch_height = 0.03
+shader_parameter/noise_amount = 0.12
+shader_parameter/static_lines = 0.25
+shader_parameter/flicker = 0.04
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_raeie"]
+resource_local_to_scene = true
+shader = ExtResource("15_raeie")
+shader_parameter/intensity = 0.10000000475
+shader_parameter/chroma_shift = 6.000000285
+shader_parameter/chroma_bleed = 1.0
+shader_parameter/saturation = 0.8
+shader_parameter/tint = Color(1, 0.96, 0.9, 1)
+shader_parameter/line_wobble = 1.2
+shader_parameter/tracking_amount = 0.35
+shader_parameter/tracking_speed = 0.6
+shader_parameter/tracking_height = 0.08
+shader_parameter/head_switch_height = 0.03
+shader_parameter/noise_amount = 0.12
+shader_parameter/static_lines = 0.25
+shader_parameter/flicker = 0.04
+
+[node name="main" type="Node2D" unique_id=960753290 node_paths=PackedStringArray("crown", "player1", "player2", "level1", "level2", "timer", "countdown", "countsound", "rewind1", "rewind2", "music", "statics")]
 script = ExtResource("1_hyk8p")
 crown = NodePath("Crown")
 player1 = NodePath("player")
@@ -144,6 +179,7 @@ countsound = NodePath("countsound")
 rewind1 = NodePath("rewind arrow1")
 rewind2 = NodePath("rewind arrow2")
 music = NodePath("music")
+statics = [NodePath("static1"), NodePath("static2")]
 
 [node name="bg" type="ColorRect" parent="." unique_id=1126892988]
 anchors_preset = 15
@@ -480,6 +516,7 @@ scale = Vector2(2, 1)
 texture = SubResource("GradientTexture2D_l3cfh")
 
 [node name="particles" type="GPUParticles2D" parent="ui" unique_id=1624898664]
+z_index = 3
 material = SubResource("ShaderMaterial_hxu8e")
 amount = 1000
 texture = ExtResource("10_7smn1")
@@ -573,6 +610,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="timer_label" type="Label" parent="ui/bg/VBoxContainer/MarginContainer/HBoxContainer" unique_id=918040556]
+z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("4_ow5a4")
@@ -658,6 +696,20 @@ stream = ExtResource("9_b1x3f")
 
 [node name="countsound" type="AudioStreamPlayer" parent="." unique_id=13051898]
 stream = ExtResource("13_th5th")
+
+[node name="static1" type="ColorRect" parent="." unique_id=1231112632]
+visible = false
+material = SubResource("ShaderMaterial_7smn1")
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+
+[node name="static2" type="ColorRect" parent="." unique_id=1078632210]
+visible = false
+material = SubResource("ShaderMaterial_raeie")
+offset_left = -640.0
+offset_right = 640.0
+offset_bottom = 360.0
 
 [connection signal="body_entered" from="death1" to="." method="_on_death_1_body_entered"]
 [connection signal="body_entered" from="death2" to="." method="_on_death_2_body_entered"]
