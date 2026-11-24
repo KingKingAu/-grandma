@@ -548,7 +548,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_y2j7i")
 text = "999999"
 placeholder_text = "SEED"
 alignment = 1
-max_length = 9
+max_length = 6
 caret_blink = true
 
 [node name="randomise" type="TextureButton" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/seed/both" unique_id=1686110347]
@@ -588,7 +588,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_pw24t")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_y2j7i")
 placeholder_text = "SEED"
 alignment = 1
-max_length = 9
+max_length = 6
 caret_blink = true
 
 [node name="randomise" type="TextureButton" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/seed/1" unique_id=1550776127]
@@ -628,7 +628,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_5dct7")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_y2j7i")
 placeholder_text = "SEED"
 alignment = 1
-max_length = 9
+max_length = 6
 caret_blink = true
 
 [node name="randomise" type="TextureButton" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/seed/2" unique_id=1123638905]

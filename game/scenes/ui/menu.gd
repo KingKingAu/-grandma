@@ -63,13 +63,13 @@ func _on_seed2_text_changed(new_text: String) -> void:
 	
 
 func _on_randomiseboth_pressed() -> void:
-	_on_seedboth_text_changed(str(randi_range(0, 99999)))
+	_on_seedboth_text_changed(str(randi_range(0, 999999)))
 
 func _on_randomise1_pressed() -> void:
-	_on_seed1_text_changed(str(randi_range(0, 99999)))
+	_on_seed1_text_changed(str(randi_range(0, 999999)))
 
 func _on_randomise2_pressed() -> void:
-	_on_seed2_text_changed(str(randi_range(0, 99999)))
+	_on_seed2_text_changed(str(randi_range(0, 999999)))
 
 
 func _on_custom_time_text_changed(new_text: String) -> void:

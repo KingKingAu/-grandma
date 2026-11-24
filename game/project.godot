@@ -10,12 +10,12 @@ config_version=5
 
 [application]
 
-config/name="game"
+config/name="splitSECOND"
 run/main_scene="uid://djmo2xup3egfa"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(0.14117648, 0.14117648, 0.14117648, 1)
 boot_splash/show_image=false
-config/icon="res://icon.svg"
+config/icon="uid://dxvumdohunff2"
 
 [autoload]
 
