@@ -27,7 +27,7 @@ func _process(delta: float) -> void:
 func animation():
 	
 	var tween_mod = create_tween()
-	tween_mod.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1), 1)
+	tween_mod.tween_property(canvasgroup, "self_modulate", Color(1, 1, 1), 1.5)
 	await tween_mod.finished
 	
 	var tween_bg = create_tween()

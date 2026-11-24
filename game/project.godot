@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="game"
-run/main_scene="uid://bfqfccwsvfy1f"
+run/main_scene="uid://djmo2xup3egfa"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(0.14117648, 0.14117648, 0.14117648, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -92,3 +94,4 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.14117648, 0.14117648, 0.14117648, 1)

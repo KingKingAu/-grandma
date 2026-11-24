@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://rducmo7cvr7e"]
-
-[ext_resource type="Script" uid="uid://bpcf2uj8ps4hc" path="res://scenes/level/level.gd" id="1_h3e3j"]
-[ext_resource type="PackedScene" uid="uid://cuip8djuvm3kb" path="res://scenes/level/platforms.tscn" id="2_nbgty"]
-
-[node name="level" type="Node2D" unique_id=1546633504]
-script = ExtResource("1_h3e3j")
-platforms = ExtResource("2_nbgty")

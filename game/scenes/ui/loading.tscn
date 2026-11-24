@@ -24,15 +24,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1034690848]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.078431375, 0.06666667, 0.10980392, 1)
-
 [node name="TextureProgressBar" type="TextureProgressBar" parent="Control" unique_id=371545531]
 texture_filter = 1
 layout_mode = 1

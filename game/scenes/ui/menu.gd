@@ -60,7 +60,7 @@ func _on_seed2_text_changed(new_text: String) -> void:
 		seed2_lineedit.text = seed2_old
 	seed2_lineedit.caret_column = seed2_lineedit.text.length()
 	Autoload.seed2 = seed2_lineedit.text
-
+	
 
 func _on_randomiseboth_pressed() -> void:
 	_on_seedboth_text_changed(str(randi_range(0, 99999)))

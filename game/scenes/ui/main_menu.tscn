@@ -698,9 +698,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_y2j7i")
 [node name="MarginContainer" type="MarginContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/PanelContainer" unique_id=1423686260]
 layout_mode = 2
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
+theme_override_constants/margin_top = 28
 theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_bottom = 28
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer" unique_id=1885274986]
 layout_mode = 2
@@ -744,7 +744,7 @@ theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("5_q85j6")
 theme_override_font_sizes/font_size = 32
-text = "Code by me"
+text = "(most) Code by me"
 horizontal_alignment = 1
 vertical_alignment = 2
 
@@ -758,7 +758,7 @@ theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("5_q85j6")
 theme_override_font_sizes/font_size = 32
-text = "Art by me"
+text = "(most) Art by me"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -773,6 +773,34 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_fonts/font = ExtResource("5_q85j6")
 theme_override_font_sizes/font_size = 32
 text = "VHS Horror shader by assetsmithpixels (MIT license)"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="credit6" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2076659480]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.8898377, 0.5428101, 0.6917404, 1)
+theme_override_colors/font_shadow_color = Color(0.8901961, 0.5411765, 0.6901961, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("5_q85j6")
+theme_override_font_sizes/font_size = 32
+text = "Godot Pixel SplashScreen by KenneyNL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="credit7" type="Label" parent="CanvasGroup/bg/menu/CenterContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=581857419]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.51291424, 0.6336959, 0.8676562, 1)
+theme_override_colors/font_shadow_color = Color(0.5137255, 0.6313726, 0.8666667, 0.23529412)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("5_q85j6")
+theme_override_font_sizes/font_size = 32
+text = "...and also various tutorials on Youtube"
 horizontal_alignment = 1
 vertical_alignment = 2
 

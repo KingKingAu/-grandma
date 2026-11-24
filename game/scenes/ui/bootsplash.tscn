@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://djmo2xup3egfa"]
+
+[ext_resource type="Texture2D" uid="uid://de8u0bo5ecqp6" path="res://assets/art/original-large-dark.png" id="1_c3as4"]
+[ext_resource type="Script" uid="uid://gb4l1q4m3hgi" path="res://scenes/ui/bootsplash.gd" id="1_jp4r7"]
+[ext_resource type="PackedScene" uid="uid://bfqfccwsvfy1f" path="res://scenes/ui/main_menu.tscn" id="2_28cr0"]
+
+[node name="Bootsplash" type="Control" unique_id=1492187481 node_paths=PackedStringArray("splash_screen")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_jp4r7")
+load_scene = ExtResource("2_28cr0")
+splash_screen = NodePath("icon")
+
+[node name="icon" type="Sprite2D" parent="." unique_id=1104222788]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_c3as4")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=96767243]
